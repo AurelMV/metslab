@@ -35,8 +35,17 @@ class ProductController extends Controller
         }
 
         // Ordenamiento
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
+        $allowedSortBy = ['created_at', 'id'];
+        $defaultSortBy = 'created_at';
+        $defaultSortOrder = 'desc';
+        $sortBy = $request->get('sort_by', $defaultSortBy);
+        if (!in_array($sortBy, $allowedSortBy, true)) {
+            $sortBy = $defaultSortBy;
+        }
+        $sortOrder = strtolower($request->get('sort_order', $defaultSortOrder));
+        if (!in_array($sortOrder, ['asc', 'desc'], true)) {
+            $sortOrder = $defaultSortOrder;
+        }
         $query->orderBy($sortBy, $sortOrder);
 
         $products = $query->paginate($request->get('per_page', 15));
