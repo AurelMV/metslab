@@ -51,8 +51,9 @@ function Lobby() {
       </div>
 
       <div>
-        <Modal isOpen={isOpenRegister} onClose={() => setIsOpenRegister(false)}>
+        <Modal isOpen={isOpenRegister} onClose={() => setIsOpenRegister(false)} children={
           <Register onRegisterSuccess={handleRegisterSuccess} />
+        }>
         </Modal>
       </div>
       

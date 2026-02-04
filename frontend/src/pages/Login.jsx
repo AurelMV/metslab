@@ -53,10 +53,10 @@ function Login({ onLoginSuccess }) {
     return (
         <div className="">
             <div className="p-8 rounded-lg bg-white w-full max-w-md space-y-6">
-                <h1 className='text-2xl font-bold text-center'>MetsLab</h1>
+                <h1 className='text-2xl font-bold text-center'>Inicia Sesión</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="">
-                        <label htmlFor="email" className='block mb-2 text-sm font-medium text-gray-700'>Email</label>
+                        <label htmlFor="email" className='block mb-2 text-left text-sm font-medium text-gray-700'>Email</label>
                         <input
                             id="email"
                             type="email"
@@ -69,7 +69,7 @@ function Login({ onLoginSuccess }) {
                     </div>
 
                     <div className="mb-4 flex flex-col">
-                        <label htmlFor="password" className='block mb-2 mt-2 text-sm font-medium text-gray-700'>Contraseña</label>
+                        <label htmlFor="password" className='block mb-2 mt-2 text-left text-sm font-medium text-gray-700'>Contraseña</label>
                         <input
                             id="password"
                             type="password"
@@ -85,7 +85,7 @@ function Login({ onLoginSuccess }) {
                         <div className="text-red-500 rounded-md bg-red-100 p-2 m-2 mb-4 text-center">{error || (fetchError?.response?.data?.message || fetchError.message)}</div>
                     )}
 
-                    <button type="submit" disabled={loading} className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <button type="submit" disabled={loading} className="w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">
                         {loading ? 'Cargando...' : 'Iniciar Sesión'}
                     </button>
                 </form>
