@@ -1,18 +1,63 @@
+import { useState } from 'react';
+import Modal from '../components/Modal.jsx';
+import Login from '../pages/Login.jsx';
+import Register from '../pages/Register.jsx';
+
 function Lobby() {
-    return ( 
-        <div>
-            <div className="text-center">
-            Lobby Page
-            {/* </div>
-            <a href="/login" className="text-blue-500 hover:underline border border-blue-500 rounded px-4 py-2">Go to Login</a>
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenRegister, setIsOpenRegister] = useState(false);
 
-            <a href="/profile" className="text-blue-500 hover:underline ml-4">Go to Profile</a>
+  const handleLoginSuccess = (success) => {
+    if (success) {
+      setIsOpenLogin(false);
+    }
+  };
 
-            <div> */}
+  const handleRegisterSuccess = (success) => {
+    if (success) {
+      setIsOpenRegister(false);
+    }
+  };
 
-            </div>
-        </div>
-     );
+  return (
+    <div className="p-10 text-center">
+      <button
+        onClick={() => setIsOpenLogin(true)}
+        className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold"
+      >
+        Abrir login
+      </button>
+
+      <button
+        onClick={() => setIsOpenRegister(true)}
+        className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold"
+      >
+        Abrir registro
+      </button>
+
+      <button
+        onClick={() => window.location.href = '/profile'}
+        className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold ml-4"
+      >
+        Ir a
+        Perfil
+      </button>
+
+      <div>
+        {isOpenLogin &&
+          <Modal isOpen={isOpenLogin} onClose={() => setIsOpenLogin(false)}>
+            <Login onLoginSuccess={handleLoginSuccess} />
+          </Modal>}
+      </div>
+
+      <div>
+        <Modal isOpen={isOpenRegister} onClose={() => setIsOpenRegister(false)}>
+          <Register onRegisterSuccess={handleRegisterSuccess} />
+        </Modal>
+      </div>
+      
+    </div>
+  );
 }
 
 export default Lobby;

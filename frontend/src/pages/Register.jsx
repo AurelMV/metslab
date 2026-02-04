@@ -1,54 +1,55 @@
 import React, { useState } from 'react';
+import useFetch from '../hooks/useFetch.js';
 
 
-function Register() {
+function Register({ onRegisterSuccess }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password_confirmation, setPasswordConfirmation] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    });
+    // const [loading, setLoading] = useState(false);
+
+    const { execute, loading, error: fetchError } = useFetch(`${import.meta.env.VITE_API_URL}/register`, 'POST', null, false);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        setLoading(true);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                    password_confirmation,
-                }),
-            });
+            const response = await execute(
+                formSubmitted, 'POST'
+            );
 
-            if (response.ok) {
-                alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-                window.location.href = '/login';
+            if (response && response.success) {
+                onRegisterSuccess(true);
             } else {
-                const data = await response.json();
-                setError(data.message || 'Error al registrar usuario');
+                setError(response?.message || 'Error al registrar usuario');
             }
         } catch (err) {
             setError('Error de conexión');
         }
-        setLoading(false);
     };
 
+    
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <h1>MetsLab</h1>
+        <div className="">
+            <div className="p-8 rounded-lg bg-white w-full max-w-md space-y-6">
+                <h1 className='text-2xl font-bold text-center'>MetsLab</h1>
                 <form onSubmit={handleSubmit}>
 
-                    <div className="form-group">
-                        <label htmlFor="name">Nombre</label>
+                    <div>
+                        <label htmlFor="name" className='block mb-2 text-sm font-medium text-gray-700'>Nombre</label>
                         <input
                             id="name"
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
                             type="text"
                             placeholder="Tu nombre"
                             value={name}
@@ -56,10 +57,11 @@ function Register() {
                             disabled={loading}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                    <div >
+                        <label htmlFor="email" className='block mb-2 mt-2 text-sm font-medium text-gray-700'>Email</label>
                         <input
                             id="email"
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
                             type="email"
                             placeholder="tu@email.com"
                             value={email}
@@ -68,10 +70,11 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="password">Contraseña</label>
+                    <div>
+                        <label htmlFor="password" className='block mb-2 mt-2 text-sm font-medium text-gray-700'>Contraseña</label>
                         <input
                             id="password"
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
                             type="password"
                             placeholder="••••••••"
                             value={password}
@@ -80,10 +83,11 @@ function Register() {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="password_confirmation">Confirmar Contraseña</label>
+                    <div>
+                        <label htmlFor="password_confirmation" className='block mb-2 mt-2 text-sm font-medium text-gray-700'>Confirmar Contraseña</label>
                         <input
                             id="password_confirmation"
+                            className='w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500'
                             type="password"
                             placeholder="••••••••"
                             value={password_confirmation}
@@ -93,10 +97,10 @@ function Register() {
                     </div>
 
                     {(error || error) && (
-                        <div className="error-message">{error || (error?.response?.data?.message || error.message)}</div>
+                        <div className="text-red-500 rounded-md bg-red-100 p-2 m-2 text-center">{error || (error?.response?.data?.message || error.message)}</div>
                     )}
 
-                    <button type="submit" disabled={loading} className="login-button">
+                    <button type="submit" disabled={loading} className="w-full bg-indigo-600 mt-4 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         {loading ? 'Cargando...' : 'Registrarse'}
                     </button>
                 </form>

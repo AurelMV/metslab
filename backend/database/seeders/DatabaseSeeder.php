@@ -16,9 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // 1. Crear roles primero
         $this->call(RoleSeeder::class);
 
-        // Create admin and client users
+        // 2. Crear categorías y colores
+        $this->call([
+            ObjectCategorySeeder::class,
+            StyleCategorySeeder::class,
+            ColorSeeder::class,
+        ]);
+
+        // 3. Crear usuarios de prueba
         $admin = User::factory()->create([
             'name' => 'Administrador',
             'email' => 'admin@example.com',
@@ -31,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
-        // Assign roles to users
+        // 4. Asignar roles a usuarios
         $admin->roles()->attach(Role::where('slug', 'admin')->first());
         $client->roles()->attach(Role::where('slug', 'client')->first());
     }

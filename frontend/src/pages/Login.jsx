@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
-function Login() {
+function Login({ onLoginSuccess }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -37,7 +37,12 @@ function Login() {
                 console.warn('No se encontró token en la respuesta:', data);
             }
 
-            navigate('/lobby');
+            if (data) {
+                onLoginSuccess(true)
+            } else {
+                console.error("Credenciales fallidas");
+            }
+
         } catch (err) {
             // Preferir mensaje del servidor si existe
             const message = err?.response?.data?.message || err?.message || 'Error en el login';
@@ -46,8 +51,8 @@ function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="border p-8 rounded-lg shadow-lg bg-white w-full max-w-md space-y-6">
+        <div className="">
+            <div className="p-8 rounded-lg bg-white w-full max-w-md space-y-6">
                 <h1 className='text-2xl font-bold text-center'>MetsLab</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="">
