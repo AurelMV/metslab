@@ -39,4 +39,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function reclamaciones()
+    {
+        return $this->hasMany(Reclamacion::class);
+    }
 }
