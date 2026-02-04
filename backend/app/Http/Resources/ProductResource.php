@@ -48,7 +48,7 @@ class ProductResource extends JsonResource
                         'color' => [
                             'id' => $variation->color->id ?? null,
                             'name' => $variation->color->name ?? null,
-                            'hex' => $variation->color->hex ?? null,
+                            'hex_value' => $variation->color->hex ?? null,
                         ],
                         'dimensions' => [
                             'length' => (float) $variation->lenght,
