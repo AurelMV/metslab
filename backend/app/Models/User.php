@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->roles->contains('slug', $roleSlug);
     }
+
+    public function reclamaciones()
+    {
+        return $this->hasMany(Reclamacion::class);
+    }
 }
