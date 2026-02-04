@@ -10,6 +10,8 @@ use App\Http\Controllers\StyleCategoryController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ReclamacionController;
+
 
 
 // --- RUTAS PÚBLICAS (Auth) ---
@@ -85,4 +87,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::apiResource('addresses', AddressController::class);
+    Route::apiResource('reclamaciones', ReclamacionController::class);
+
 });
