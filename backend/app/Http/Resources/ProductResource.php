@@ -20,14 +20,20 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             
             // Categorías
-            'object_category' => [
-                'id' => $this->objectCategory->id ?? null,
-                'name' => $this->objectCategory->name ?? null,
-            ],
-            'style_category' => [
-                'id' => $this->styleCategory->id ?? null,
-                'name' => $this->styleCategory->name ?? null,
-            ],
+            'object_category' => $this->whenLoaded('objectCategory', function () {
+                $category = $this->objectCategory;
+                return [
+                    'id' => $category->id ?? null,
+                    'name' => $category->name ?? null,
+                ];
+            }),
+            'style_category' => $this->whenLoaded('styleCategory', function () {
+                $category = $this->styleCategory;
+                return [
+                    'id' => $category->id ?? null,
+                    'name' => $category->name ?? null,
+                ];
+            }),
 
             // Imágenes del modelo 3D (previews, renders, etc.)
             'images' => $this->whenLoaded('images', function () {
