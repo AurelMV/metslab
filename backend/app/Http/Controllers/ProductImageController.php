@@ -59,7 +59,7 @@ class ProductImageController extends Controller
         }
 
         // Si no se proporciona order, usar el siguiente disponible
-        $order = $request->order ?? ($product->images()->max('order') + 1 ?? 0);
+        $order = $request->order ?? (($product->images()->max('order') ?? -1) + 1);
 
         $image = $product->images()->create([
             'path' => $imageUrl,
