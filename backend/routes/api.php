@@ -8,6 +8,9 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ObjectCategoryController;
 use App\Http\Controllers\StyleCategoryController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\LocationController;
+
 
 // --- RUTAS PÚBLICAS (Auth) ---
 Route::post('/register', [AuthController::class, 'register']);
@@ -21,6 +24,14 @@ Route::get('/products/{product}', [ProductController::class, 'show']);
 Route::get('/object-categories', [ObjectCategoryController::class, 'index']);
 Route::get('/style-categories', [StyleCategoryController::class, 'index']);
 Route::get('/colors', [ColorController::class, 'index']);
+// --- RUTAS PÚBLICAS (Ubicaciones de Perú) ---
+Route::prefix('locations')->group(function () {
+    Route::get('/', [LocationController::class, 'all']);
+    Route::get('/departments', [LocationController::class, 'departments']);
+    Route::get('/departments/{department}/provinces', [LocationController::class, 'provinces']);
+    Route::get('/departments/{department}/provinces/{province}/districts', [LocationController::class, 'districts']);
+});
+
 
 // --- RUTAS PROTEGIDAS ---
 Route::middleware('auth:sanctum')->group(function () {
@@ -72,4 +83,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/colors/{color}', [ColorController::class, 'update']);
         Route::delete('/colors/{color}', [ColorController::class, 'destroy']);
     });
+
+    Route::apiResource('addresses', AddressController::class);
 });
