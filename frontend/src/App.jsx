@@ -17,7 +17,7 @@ function App() {
           <Route path="*" element={<Navigate to="/lobby" replace />} />
           <Route path="/lobby" element={<Lobby />} />
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
 
           {/* Rutas que deben ser protegidas*/}
           <Route path="/profile" element={<Profile />} />

@@ -8,12 +8,6 @@ function Register({ onRegisterSuccess }) {
     const [password, setPassword] = useState('');
     const [password_confirmation, setPasswordConfirmation] = useState('');
     const [error, setError] = useState('');
-    const [formSubmitted, setFormSubmitted] = useState({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
     // const [loading, setLoading] = useState(false);
 
     const { execute, loading, error: fetchError } = useFetch(`${import.meta.env.VITE_API_URL}/register`, 'POST', null, false);
@@ -23,26 +17,31 @@ function Register({ onRegisterSuccess }) {
         e.preventDefault();
         setError('');
 
-        try {
-            const response = await execute(
-                formSubmitted, 'POST'
-            );
+        if (!email || !password || !name || !password_confirmation) {
+            setError('Por favor completa todos los campos');
+            return;
+        }
 
-            if (response && response.success) {
+        if (!email.includes('@')) {
+            setError('Por favor ingresa un email válido');
+            return;
+        }
+
+        const dataToSubmit = {
+            name,
+            email,
+            password,
+            password_confirmation
+        };
+
+        try {
+            const response = await execute(dataToSubmit, 'POST');
+
+            if (response) {
                 onRegisterSuccess(true);
-            } else {
-                setError(response?.message || 'Error al registrar usuario');
             }
         } catch (err) {
-            if (!email || !password || !name || !password_confirmation) {
-                setError('Por favor completa todos los campos');
-                return;
-            }
-
-            if (!email.includes('@')) {
-                setError('Por favor ingresa un email válido');
-                return;
-            }
+            console.error('Error en registro:', err || err.message);
         }
     };
 
@@ -115,7 +114,7 @@ function Register({ onRegisterSuccess }) {
                     </div>
 
                     {(error || fetchError) && (
-                        <div className="text-red-500 rounded-md bg-red-100 p-2 m-2 text-center">{error || (fetchError?.response?.data?.message || fetchError.message)}</div>
+                        <div className="text-red-500 rounded-md bg-red-100 p-2 m-2 text-center">{error || fetchError?.response?.data?.message || fetchError.message}</div>
                     )}
 
                     <button type="submit" disabled={loading} className="w-full bg-orange-500 mt-4 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">
