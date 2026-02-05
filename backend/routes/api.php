@@ -13,6 +13,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReclamacionController;
 
 
+
 // --- RUTAS PÚBLICAS (Auth) ---
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -87,4 +88,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('addresses', AddressController::class);
     Route::apiResource('reclamaciones', ReclamacionController::class);
+
 });
