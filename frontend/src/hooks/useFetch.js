@@ -26,7 +26,8 @@ const useFetch = (url, method = 'GET', body = null, auto = true) => {
   }, [url, method, auto, trigger]);
 
   // Función para realizar solicitudes con otros métodos
-  const execute = async (newBody = null, customMethod = method) => {
+  const execute = async (options = {}) => {
+    const { body: newBody = null, method: customMethod = method, ...axiosOptions } = options;
     setLoading(true);
     setError(null);
     try {
@@ -34,11 +35,13 @@ const useFetch = (url, method = 'GET', body = null, auto = true) => {
         url,
         method: customMethod.toUpperCase(),
         data: newBody,
+        ...axiosOptions,
       });
       setData(response.data);
       return response.data;
     } catch (err) {
-      setError(err);
+      const errorMsg = err.response?.data?.message || err.message || 'Error en la solicitud';
+      setError(errorMsg);
       throw err;
     } finally {
       setLoading(false);

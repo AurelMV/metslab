@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 function Login({ onLoginSuccess }) {
+    const { login } = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -26,21 +28,17 @@ function Login({ onLoginSuccess }) {
         }
 
         try {
-            const data = await execute({ email, password }, 'POST');
+            const data = await execute({ body: { email, password }, method: 'POST' });
 
             // Soportar diferentes nombres de token en la respuesta
             const token = data?.token || data?.access_token || data?.data?.token || data?.data?.access_token;
+            const role = data?.user?.roles?.[0];
 
             if (token) {
-                localStorage.setItem('token', token);
+                login(token, role);
+                onLoginSuccess(true);
             } else {
                 console.warn('No se encontró token en la respuesta:', data);
-            }
-
-            if (data) {
-                onLoginSuccess(true)
-            } else {
-                console.error("Credenciales fallidas");
             }
 
         } catch (err) {

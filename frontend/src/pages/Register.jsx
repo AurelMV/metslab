@@ -35,13 +35,14 @@ function Register({ onRegisterSuccess }) {
         };
 
         try {
-            const response = await execute(dataToSubmit, 'POST');
+            const response = await execute({ body: dataToSubmit, method: 'POST' });
 
             if (response) {
                 onRegisterSuccess(true);
             }
         } catch (err) {
-            console.error('Error en registro:', err || err.message);
+            const message = err?.response?.data?.message || err?.message || 'Error en el registro';
+            setError(message);
         }
     };
 
