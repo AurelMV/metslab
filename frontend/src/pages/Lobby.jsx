@@ -23,46 +23,7 @@ function Lobby() {
 
   return (
     <div >
-      <NavBar />
-      <div className='p-4'>
-        <button
-          disabled={isAuthenticated === true}
-          
-          onClick={() => setIsOpenLogin(true)}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold"
-        >
-          Abrir login
-        </button>
-
-        <button
-          onClick={() => setIsOpenRegister(true)}
-          className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold"
-        >
-          Abrir registro
-        </button>
-
-        {/* <button
-          onClick={() => window.location.href = '/profile'}
-          className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold ml-4"
-        >
-          Ir a
-          Perfil
-        </button> */}
-
-        <div>
-          {isOpenLogin &&
-            <Modal isOpen={isOpenLogin} onClose={() => setIsOpenLogin(false)}>
-              <Login onLoginSuccess={handleLoginSuccess} />
-            </Modal>}
-        </div>
-
-        <div>
-          <Modal isOpen={isOpenRegister} onClose={() => setIsOpenRegister(false)} children={
-            <Register onRegisterSuccess={handleRegisterSuccess} />
-          }>
-          </Modal>
-        </div>
-      </div>
+      
     </div>
   );
 }
