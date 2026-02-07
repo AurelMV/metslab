@@ -24,7 +24,7 @@ function Profile() {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl mx-auto px-4 py-10 mt-20">
       <div className="flex flex-col md:flex-row gap-8">
         
         {/* Sidebar Lateral */}
