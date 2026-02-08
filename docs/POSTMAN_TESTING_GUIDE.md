@@ -16,7 +16,7 @@ Primero necesitamos categorías y colores nuevos para nuestro producto de prueba
 **POST** `http://localhost:8000/api/admin/object-categories`
 ```json
 {
-  "name": "Naves Espaciales"
+  "name": "Naves Espaciales"//13
 }
 ```
 > **Nota el ID que te devuelve** (Digamos que es ID: `15`)
@@ -25,7 +25,7 @@ Primero necesitamos categorías y colores nuevos para nuestro producto de prueba
 **POST** `http://localhost:8000/api/admin/style-categories`
 ```json
 {
-  "name": "Super Futurista"
+  "name": "Super Futurista"//13
 }
 ```
 > **Nota el ID que te devuelve** (Digamos que es ID: `15`)
@@ -34,7 +34,7 @@ Primero necesitamos categorías y colores nuevos para nuestro producto de prueba
 **POST** `http://localhost:8000/api/admin/colors`
 ```json
 {
-  "name": "Plata Galáctico",
+  "name": "Plata Galáctico",//13
   "hex_value": "#C0C0C0"
 }
 ```

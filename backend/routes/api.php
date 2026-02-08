@@ -11,6 +11,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReclamacionController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CatalogController;
 
 
@@ -95,6 +96,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/colors', [ColorController::class, 'store']);
         Route::put('/colors/{color}', [ColorController::class, 'update']);
         Route::delete('/colors/{color}', [ColorController::class, 'destroy']);
+
+        // Gestión de Usuarios
+        Route::get('/users', [AdminUserController::class, 'index']);
+        Route::get('/users/{userId}', [AdminUserController::class, 'show']);
+        
+        // Acción directa (Evita problemas de binding)
+        Route::post('/users/assign-role', [AdminUserController::class, 'assignRole']);
+        
+        Route::post('/users/{userId}/toggle-status', [AdminUserController::class, 'toggleStatus']);
     });
 
     Route::apiResource('addresses', AddressController::class);
