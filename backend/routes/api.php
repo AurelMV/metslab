@@ -12,6 +12,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReclamacionController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\CatalogController;
 
 
 
@@ -35,6 +36,16 @@ Route::prefix('locations')->group(function () {
     Route::get('/departments/{department}/provinces/{province}/districts', [LocationController::class, 'districts']);
 });
 
+// --- RUTAS PÚBLICAS (Catálogo Avanzado) ---
+Route::prefix('catalog')->group(function () {
+    Route::get('/filters', [CatalogController::class, 'getFilters']);
+    Route::get('/products', [CatalogController::class, 'getProducts']);
+    Route::get('/products/{product}', [CatalogController::class, 'getProduct']);
+    Route::get('/by-color/{color}', [CatalogController::class, 'getProductsByColor']);
+    Route::get('/by-category/{objectCategory}', [CatalogController::class, 'getProductsByCategory']);
+    Route::get('/featured', [CatalogController::class, 'getFeatured']);
+    Route::get('/search', [CatalogController::class, 'search']);
+});
 
 // --- RUTAS PROTEGIDAS ---
 Route::middleware('auth:sanctum')->group(function () {
